@@ -36,25 +36,22 @@ A retail business wants to know, at a glance:
 ### 1. Executive Overview
 KPI cards, monthly Sales & Profit trend, and breakdowns by Category and Region.
 
-<img width="1114" height="631" alt="02 Executive Overview" src="https://github.com/user-attachments/assets/997e1587-33d8-432a-b3d0-120712100a93" />
-
+![Executive Overview](images/02_executive_overview.png)
 
 ### 2. Sales & Product Analysis
 Sales and profit by Category and Sub-Category, plus the Top 10 products.
 
-<img width="1116" height="618" alt="03 Sales   Product Analysis" src="https://github.com/user-attachments/assets/b502b354-5fd5-429c-86ac-2267d7b8ecbd" />
-
+![Sales & Product Analysis](images/03_sales_product_analysis.png)
 
 ### 3. Customer Analysis
 Customer count, Average Order Value, segment split, Top 10 customers and customer-wise profit.
 
-<img width="1118" height="627" alt="04 Customer Analysis" src="https://github.com/user-attachments/assets/7a5ab8b0-acd9-46b7-bf33-8e8c551b9e70" />
-
+![Customer Analysis](images/04_customer_analysis.png)
 
 ### 4. Regional Performance
 Sales and profit by Region, State and City, with a state-level map.
 
-<img width="1119" height="632" alt="05 Regional Performance" src="https://github.com/user-attachments/assets/911908c5-d9db-41a4-9a5e-e74c1a49f93b" />
+![Regional Performance](images/05_regional_performance.png)
 
 ---
 
@@ -87,11 +84,11 @@ Sales and profit by Region, State and City, with a state-level map.
 
 ## 🗂️ Dataset
 
-- **File:** data/Retail_Sales_Analytics_Dashboard.csv
+- **File:** [`data/Retail_Sales_Analytics_Dashboard.csv`](data/Retail_Sales_Analytics_Dashboard.csv)
 - **Size:** 9,994 rows × 21 columns · **Period:** Jan 2014 – Dec 2017
 - **Quality:** no missing values, no duplicate rows
 - **Encoding:** Windows-1252 / Latin-1 (in Python use `pd.read_csv(..., encoding="latin-1")`)
-- **Date format:** `08/08/2025`
+- **Date format:** `August 2025`
 
 | Group | Columns |
 |-------|---------|
@@ -107,8 +104,7 @@ Sales and profit by Region, State and City, with a state-level map.
 
 Star schema: one fact table with one-to-many relationships from four dimension tables, plus a dedicated `All Measures` table.
 
-<img width="1222" height="622" alt="01 Data Model" src="https://github.com/user-attachments/assets/72c059fe-ec4e-42e1-bc5f-6ed80a8553c5" />
-
+![Data Model](images/01_data_model.png)
 
 | Table | Role | Key fields |
 |-------|------|-----------|
