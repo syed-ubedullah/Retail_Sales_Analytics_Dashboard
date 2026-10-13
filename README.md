@@ -36,7 +36,8 @@ A retail business wants to know, at a glance:
 ### 1. Executive Overview
 KPI cards, monthly Sales & Profit trend, and breakdowns by Category and Region.
 
-![Executive Overview](images/02_executive_overview.png)
+<img width="1114" height="631" alt="02 Executive Overview" src="https://github.com/user-attachments/assets/997e1587-33d8-432a-b3d0-120712100a93" />
+
 
 ### 2. Sales & Product Analysis
 Sales and profit by Category and Sub-Category, plus the Top 10 products.
