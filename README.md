@@ -87,7 +87,7 @@ Sales and profit by Region, State and City, with a state-level map.
 
 ## 🗂️ Dataset
 
-- **File:** 
+- **File:** data/Retail_Sales_Analytics_Dashboard.csv
 - **Size:** 9,994 rows × 21 columns · **Period:** Jan 2014 – Dec 2017
 - **Quality:** no missing values, no duplicate rows
 - **Encoding:** Windows-1252 / Latin-1 (in Python use `pd.read_csv(..., encoding="latin-1")`)
