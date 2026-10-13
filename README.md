@@ -3,7 +3,8 @@
 ![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
 ![DAX](https://img.shields.io/badge/DAX-Measures-0078D4?style=for-the-badge)
 ![Star Schema](https://img.shields.io/badge/Data%20Model-Star%20Schema-5C2D91?style=for-the-badge)
-![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?style=for-the-badge)
+![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![Excel](https://img.shields.io/badge/Excel-217346?style=for-the-badge&logo=microsoftexcel&logoColor=white)
 
 An end-to-end **Power BI** project that turns retail order data (Superstore, 2014–2017) into a 4-page interactive dashboard covering sales, profitability, products, customers and regions. Built on a star-schema data model with reusable DAX measures.
 
@@ -130,9 +131,58 @@ Star schema: one fact table with one-to-many relationships from four dimension t
 
 ---
 
-## 🛠️ Tools & Skills
+## 🛠️ Tools Used
 
-Power BI Desktop · Power Query · DAX · Star Schema Modeling · KPI cards, combo, bar, column, donut and map visuals · Slicers and cross-filtering
+| Tool | How it was used |
+|------|-----------------|
+| **Power BI** | Star-schema data model, DAX measures, and a 4-page interactive report (KPI cards, combo, bar, column, donut and map visuals, slicers, cross-filtering) |
+| **SQL (MySQL)** | Data quality checks, KPI validation and the analysis behind each dashboard page. All queries are in [`sql/retail_sales_analysis.sql`](sql/retail_sales_analysis.sql) |
+| **Excel** | Reviewing and preparing the source CSV data |
+
+---
+
+## 🗄️ SQL Analysis
+
+The full script ([`sql/retail_sales_analysis.sql`](sql/retail_sales_analysis.sql)) creates the table, loads the CSV (Latin-1, `M/D/YYYY` dates) and answers the business question behind each dashboard page.
+
+| Dashboard page | SQL analysis |
+|----------------|--------------|
+| Data checks | Row count, date range, failed date parsing, duplicate rows |
+| Executive Overview | Headline KPIs, sales and profit by category, monthly trend, seasonality, year-over-year growth (`LAG`) |
+| Sales & Product | Sub-category margin, loss-making sub-categories, Top 10 products, discount-band impact on profit |
+| Customer | Segment summary, Top 10 customers by sales and by profit |
+| Regional | Region summary, region × category, Top 10 states by profit, loss-making states, Top 10 cities, ship-mode performance |
+
+**Example: headline KPIs**
+
+```sql
+SELECT ROUND(SUM(sales), 2)                          AS total_sales,
+       ROUND(SUM(profit), 2)                         AS total_profit,
+       ROUND(SUM(profit) / SUM(sales) * 100, 2)      AS profit_margin_pct,
+       ROUND(AVG(discount) * 100, 2)                 AS avg_discount_pct,
+       COUNT(DISTINCT order_id)                      AS total_orders,
+       COUNT(DISTINCT customer_id)                   AS total_customers,
+       ROUND(SUM(sales) / COUNT(DISTINCT order_id), 2) AS avg_order_value
+FROM retail_sales;
+```
+
+**Example: year-over-year growth**
+
+```sql
+WITH yearly AS (
+    SELECT YEAR(order_date) AS yr, SUM(sales) AS total_sales
+    FROM retail_sales
+    GROUP BY YEAR(order_date)
+)
+SELECT yr,
+       ROUND(total_sales, 2) AS total_sales,
+       ROUND((total_sales - LAG(total_sales) OVER (ORDER BY yr))
+             / LAG(total_sales) OVER (ORDER BY yr) * 100, 2) AS yoy_growth_pct
+FROM yearly
+ORDER BY yr;
+```
+
+---
 
 ## 📁 Repository Structure
 
@@ -140,6 +190,7 @@ Power BI Desktop · Power Query · DAX · Star Schema Modeling · KPI cards, com
 Retail-Sales-Analytics-Dashboard/
 ├── README.md
 ├── data/        Retail_Sales_Analytics_Dashboard.csv
+├── sql/         retail_sales_analysis.sql
 ├── dashboard/   Retail_Sales_Dashboard.pbix
 ├── docs/        Project report (PDF + Word)
 └── images/      Data model + 4 dashboard screenshots
