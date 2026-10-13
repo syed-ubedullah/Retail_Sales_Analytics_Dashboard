@@ -1,0 +1,165 @@
+# 📊 Retail Sales Analytics Dashboard
+
+![Power BI](https://img.shields.io/badge/Power%20BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-Measures-0078D4?style=for-the-badge)
+![Star Schema](https://img.shields.io/badge/Data%20Model-Star%20Schema-5C2D91?style=for-the-badge)
+![Power Query](https://img.shields.io/badge/Power%20Query-ETL-217346?style=for-the-badge)
+
+An end-to-end **Power BI** project that turns retail order data (Superstore, 2014–2017) into a 4-page interactive dashboard covering sales, profitability, products, customers and regions. Built on a star-schema data model with reusable DAX measures.
+
+📄 **Full project report:** [PDF](docs/Retail_Sales_Analytics_Project_Report.pdf) · [Word](docs/Retail_Sales_Analytics_Project_Report.docx)
+
+---
+
+## 🎯 Business Problem
+
+A retail business wants to know, at a glance:
+
+- How are **sales and profit** trending over time?
+- Which **categories and products** drive revenue, and which ones lose money?
+- Who are the most valuable **customers and segments**?
+- Which **regions, states and cities** perform best?
+
+---
+
+## 📈 Headline Metrics
+
+| Total Sales | Total Profit | Total Orders | Profit Margin | Avg Discount | Customers | Avg Order Value |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| **₹1.94M** | **₹222.16K** | **4,172** | **11.48%** | **17.57%** | **792** | **₹463.82** |
+
+---
+
+## 🖼️ Dashboard Preview
+
+### 1. Executive Overview
+KPI cards, monthly Sales & Profit trend, and breakdowns by Category and Region.
+
+![Executive Overview](images/02_executive_overview.png)
+
+### 2. Sales & Product Analysis
+Sales and profit by Category and Sub-Category, plus the Top 10 products.
+
+![Sales & Product Analysis](images/03_sales_product_analysis.png)
+
+### 3. Customer Analysis
+Customer count, Average Order Value, segment split, Top 10 customers and customer-wise profit.
+
+![Customer Analysis](images/04_customer_analysis.png)
+
+### 4. Regional Performance
+Sales and profit by Region, State and City, with a state-level map.
+
+![Regional Performance](images/05_regional_performance.png)
+
+---
+
+## 🔎 Key Insights
+
+| # | Insight |
+|---|---------|
+| 1 | The business earns an **11.48% profit margin** on ₹1.94M of sales (₹222.16K profit). |
+| 2 | **Technology** leads on sales (₹734K) and profit (₹125K). **Furniture** has ₹642K in sales but only ₹13K profit, about a 2% margin. |
+| 3 | **Tables** generate about ₹197K in sales but lose about ₹17K. Bookcases and Supplies are also slightly negative. |
+| 4 | **Phones** (₹280K) and **Chairs** (₹267K) lead sub-category sales; **Copiers** lead profit (₹52K). |
+| 5 | The **Canon imageCLASS 2200 Advanced Copier** is the top product at about ₹62K, roughly 2.7× the next product. |
+| 6 | Sales peak in **November (₹292K)**, with September and December also strong; January and February are the weakest months. |
+| 7 | **West (₹582K)** and **East (₹576K)** lead regional sales; West also leads profit (₹81K). Central has the lowest profit (₹31K). |
+| 8 | **Consumer** is the largest segment (₹972K, 409 customers). Top customer by sales is Sean Miller (~₹24.5K); most profitable is Tamara Chand (~₹8.6K). |
+| 9 | **New York City** leads city sales (~₹218K); **New York** leads state profit (~₹62K). |
+
+---
+
+## 💡 Recommendations
+
+1. **Fix Furniture profitability**: review pricing and discounts on Tables and Bookcases.
+2. **Grow high-margin lines**: Copiers, Phones and Accessories.
+3. **Plan around seasonality**: prepare for September–December and lift January–February with offers.
+4. **Review the Central region**: lowest profit relative to its sales.
+5. **Look beyond sales for customers**: protect the most profitable accounts, review high-sales low-profit ones.
+6. **Reduce dependence on one product** (Canon imageCLASS 2200).
+
+---
+
+## 🗂️ Dataset
+
+- **File:** [`data/Retail_Sales_Analytics_Dashboard.csv`](data/Retail_Sales_Analytics_Dashboard.csv)
+- **Size:** 9,994 rows × 21 columns · **Period:** Jan 2014 – Dec 2017
+- **Quality:** no missing values, no duplicate rows
+- **Encoding:** Windows-1252 / Latin-1 (in Python use `pd.read_csv(..., encoding="latin-1")`)
+- **Date format:** `M/D/YYYY`
+
+| Group | Columns |
+|-------|---------|
+| Order | Row ID, Order ID, Order Date, Ship Date, Ship Mode |
+| Customer | Customer ID, Customer Name, Segment |
+| Location | Country, State, City, Postal Code, Region |
+| Product | Product ID, Product Name, Category, Sub-Category |
+| Financials | Sales, Quantity, Discount, Profit |
+
+---
+
+## 🧱 Data Model
+
+Star schema: one fact table with one-to-many relationships from four dimension tables, plus a dedicated `All Measures` table.
+
+![Data Model](images/01_data_model.png)
+
+| Table | Role | Key fields |
+|-------|------|-----------|
+| Retail Sales Analytics Dashboard | Fact | Order ID, Order Date, Sales, Quantity, Discount, Profit, keys |
+| Dim_Customer | Dimension | Customer ID, Customer Name, Segment |
+| Dim_Geography | Dimension | Geography Key, City, State, Region, Country, Postal Code |
+| Dim_Product | Dimension | Product ID, Product Name, Category, Sub-Category |
+| Dim_Date | Dimension | Date, Year, Month, Month Number, Month Short, Quarter |
+| All Measures | Measure table | All DAX measures |
+
+---
+
+## 🧮 DAX Measures
+
+| Measure | Definition |
+|---------|-----------|
+| Total Sales | Sum of Sales |
+| Total Profit | Sum of Profit |
+| Profit Margin % | Total Profit ÷ Total Sales |
+| Average Discount % | Average of Discount |
+| Total Orders | Distinct count of Order ID |
+| Total Customers | Distinct count of customers |
+| Average Order Value | Total Sales ÷ Total Orders |
+
+---
+
+## 🛠️ Tools & Skills
+
+Power BI Desktop · Power Query · DAX · Star Schema Modeling · KPI cards, combo, bar, column, donut and map visuals · Slicers and cross-filtering
+
+## 📁 Repository Structure
+
+```
+Retail-Sales-Analytics-Dashboard/
+├── README.md
+├── data/        Retail_Sales_Analytics_Dashboard.csv
+├── dashboard/   Retail_Sales_Dashboard.pbix
+├── docs/        Project report (PDF + Word)
+└── images/      Data model + 4 dashboard screenshots
+```
+
+## ▶️ How to Open
+
+1. Download or clone this repository.
+2. Open `dashboard/Retail_Sales_Dashboard.pbix` in **Power BI Desktop**.
+3. If prompted, point the data source to `data/Retail_Sales_Analytics_Dashboard.csv`.
+4. Use the Year, Category, Segment and Region slicers to explore.
+
+---
+
+## 👤 Author
+
+**Syed Ubedullah Basha** · Data Analyst | Power BI Developer | SQL Developer
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/syed-ubedullah-basha)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/syed-ubedullah)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:syedubedullahbasha@gmail.com)
+
+⭐ If you found this project useful, consider giving it a star!
